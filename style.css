@@ -1,0 +1,93 @@
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		header{
+            text-align:center;
+			font-weight:bold;
+			background-color: white;
+        }
+		body{
+			background-image: url(img/fundo.jpg);
+			background-repeat: no-repeat;
+		}
+		h1{
+			background-color: white;
+			text-align: center;
+			color: indigo;
+			margin-top: 5px;
+			margin-bottom: 15px;
+		}
+		h2{
+			text-align: center;
+		}
+		h3{
+			text-align: center;
+			color: indigo;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		h4{
+			font-family: Garamond;
+			font-weight: bold;
+			font-size: 20px;
+			margin-left: 10px;
+			margin-top: 45px;
+		}
+		p{
+			text-align: center;
+			color: navy;
+		}	
+		.titulo{
+			font-size: 50px;
+			color: #fff769;
+			text-shadow: 3px 1px black;
+			margin-left: 10px;
+			font-family: "Racing Sans One";
+		}
+		.corpo{
+			background-color: #fffddb;
+			height: 630px;
+			width: 1000px;
+			margin-top: 5px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: 10px;
+			border: 2px solid black;
+			border-radius: 10px;
+		}
+		.titulo2{
+			font-size: 35px;
+			color: #2119bd;
+			font-family: Garamond;
+			font-weight: bold;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		.formulario{
+			background-color: white;
+			height: 500px;
+			text-align: center;
+			font-size: 18px;
+			font-weight: bold;
+			font-family: Calibri;
+			color: navy;
+		}
+
+		.tituloform{
+			margin-bottom: 5px;
+		}
+		.botoes{
+			text-align: center;
+		}
+		select, input, button{
+			margin-bottom: 5px;
+			width: 250px;
+		}
+		#submit, #button{
+			width: 250px;
+			margin-top: 15px;
+			background-color: #cffffe;
+			font-weight: bold;
+			font-size: 15px;
+		}

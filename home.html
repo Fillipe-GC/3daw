@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> XPTOTEC - Aluguel de Carros </title>
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script>
+			function listacidades(){
+				var xhttp = new XMLHttpRequest();
+				var i = 0;
+				xhttp.onreadystatechange = function(){
+					if(this.readyState==4 && this.status==200){
+						var REcidade = JSON.parse(this.responseText);
+							if(REcidade){
+								while(i < REcidade.length){
+									var opcaolista = document.createElement("option");
+									opcaolista.setAttribute("value",REcidade[i]["nomecidade"]);
+									opcaolista.innerHTML = REcidade[i]["nomecidade"];
+									document.getElementById("cidade").appendChild(opcaolista);
+								i++;
+								}
+							}
+							else{
+								alert("Erro no recebimento de dados, verifique se o banco de dados está correto.");
+							}
+						}
+					}
+				xhttp.open("GET", "listacidades.php", true);
+				xhttp.send();
+			}
+						
+			function listacarros(){
+				var xhttp = new XMLHttpRequest();
+				var opcaocidade = document.getElementById("cidade").value;
+				var i = 0;
+				document.getElementById("carro").innerHTML = '<option value = "" selected>Escolha uma opção</option>';
+				if(opcaocidade){
+					xhttp.onreadystatechange = function(){
+						if(this.readyState == 4 && this.status == 200){
+							var REcarros = JSON.parse(this.responseText);
+							if(REcarros){
+								while(i < REcarros.length){
+									var opcaolista = document.createElement("option");
+									opcaolista.setAttribute("value",REcarros[i]["codplaca"]);
+									opcaolista.innerHTML = REcarros[i]["marca"]+" "+REcarros[i]["modelo"]+" - "+REcarros[i]["cor"]+" ("+REcarros[i]["ano"]+") - R$"+REcarros[i]["precodiaria"]+" diária";
+									document.getElementById("carro").appendChild(opcaolista);
+									i++;
+								}
+							}
+							else{
+								alert("Erro no recebimento de dados, verifique se o banco de dados está correto.");
+							}
+						}
+					}
+					xhttp.open("GET","listacarros.php?opcaocidade=" + opcaocidade,true);
+					xhttp.send();
+				}	
+			}
+			function listalojas(){
+				var xhttp = new XMLHttpRequest();
+				var opcaocidade = document.getElementById("cidade").value;
+				var i = 0;
+				document.getElementById("loja").innerHTML = '<option value = "" selected>Escolha uma opção</option>';
+				if(opcaocidade){
+					xhttp.onreadystatechange = function(){
+						if(this.readyState == 4 && this.status == 200){
+							var RElojas = JSON.parse(this.responseText);
+							if(RElojas){
+								while(i < RElojas.length){
+									var opcaolista = document.createElement("option");
+									opcaolista.setAttribute("value",RElojas[i]["codloja"]);
+									opcaolista.innerHTML = "Loja "+RElojas[i]["codloja"]+": "+RElojas[i]["endereco"]+" - "+RElojas[i]["bairro"];
+									document.getElementById("loja").appendChild(opcaolista);
+									i++;
+								}
+							}
+							else{
+								alert("Erro no recebimento de dados, verifique se o banco de dados está correto.");
+							}
+						}
+					}
+					xhttp.open("GET","listalojas.php?opcaocidade=" + opcaocidade,true);
+					xhttp.send();
+				}
+			}
+			
+			function validadata(){
+				var datainicio = document.getElementById("datain").value;
+				var datafim = document.getElementById("datafim").value;
+				datainicio = datainicio.split("-");
+				datainicio = new Date(datainicio[0],datainicio[1],datainicio[2]);
+				datainicio = datainicio.getTime();
+				datafim = datafim.split("-");
+				datafim = new Date(datafim[0],datafim[1],datafim[2]);
+				datafim = datafim.getTime();
+				var dataatual = Date.now();
+				dataatual = dataatual + (30*24*60*60*1000);
+				var diferenca = datainicio - dataatual;
+				if(diferenca < 0){
+					alert("A data de retirada não pode ser anterior à data de hoje. Por favor, escolha uma data válida.");
+					document.getElementById("datain").value="";
+					document.getElementById("datafim").value="";
+					return false;
+				}else{
+					diferenca = datafim - datainicio;
+					if(diferenca < 0){
+						alert("A data de entrega não pode ser anterior à data de retirada. Por favor, escolha uma data válida.");
+						document.getElementById("datain").value="";
+						document.getElementById("datafim").value="";
+						return false;
+					}else{
+						return true;
+					}
+				}			
+			}
+		</script>
+	</head>
+	<body onload = "listacidades()">
+		<header>
+            <p>Faculdade de Educação Tecnológica do Estado do Rio de Janeiro<br>
+            3DAW Manhã - Prova AV2<br>
+            Aluno: Fillipe Gonçalves de Carvalho<br></p> 
+        </header>
+		<article class = "titulo">XPTOTEC Locadora</article>
+		<div class = "corpo">
+		<p class = "titulo2">Faça sua reserva conosco:</p>
+		<form method="POST" class="formulario" action="reserva1.php">
+			<p class = "tituloform">Selecione a sua cidade:</p>
+			<select name="cidade" id="cidade" onchange="listacarros()" required>
+				<option value="" id="" selected>Escolha uma opção</option>
+			</select>
+			<br><p class = "tituloform">Selecione o carro:</p>
+			<select name="carro" id="carro" onchange="listalojas()" required>
+				<option value="" id="" selected>Escolha uma opção</option>
+			</select>
+			<br><p class = "tituloform">Selecione a loja:</p>
+			<select name="loja" id="loja" required>
+				<option value="" id="" selected>Escolha uma opção</option>
+			</select>
+			<br><p class = "tituloform">Selecione a data de retirada:</p>
+			<input type="date" id="datain" name="datain" required>
+			<br><p class = "tituloform">Selecione a data de entrega:</p>
+			<input type="date" id="datafim" name="datafim" required>
+			<br><input type="submit" id="submit" onclick = "validadata()" value="Efetuar reserva"><br>
+		</form>
+		</div>
+	</body>
+</html>
