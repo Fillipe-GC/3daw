@@ -1,2 +1,2 @@
 # 3daw
-Faeterj 3º período
+Exercícios simples para a matéria 3DAW
